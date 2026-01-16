@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Removendo espaços do topo e das laterais */
         body { 
             margin: 0; 
-            padding: 10px; 
+            padding: 5px 10px; /* Reduzi o topo para 5px */
             font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
-            background: transparent; 
+            background: transparent;
+            overflow-x: hidden;
         }
 
         .btn-container { 
             display: flex; 
             flex-direction: column; 
-            gap: 16px; 
+            gap: 10px; /* Reduzi o espaço entre botões para economizar altura */
         }
         
         .btn {
@@ -23,32 +25,27 @@
             align-items: center; 
             justify-content: flex-start; 
             width: 100%; 
-            padding: 20px 25px; 
-            color: #000000 !important; /* TEXTO PRETO */
+            padding: 15px 20px; /* Diminuí a altura interna do botão */
+            color: #000000 !important;
             text-decoration: none !important;
-            border-radius: 15px; 
+            border-radius: 12px; 
             font-weight: bold; 
-            font-size: 21px; /* Fonte Grande */
+            font-size: 20px; /* Ajustei para 20px para não estourar a tela */
             box-sizing: border-box; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s; 
             border: none;
-            /* Laranja Claro / Pêssego */
             background: linear-gradient(135deg, #ffb347, #ffcc33);
         }
 
-        /* Estilo dos ícones */
         .btn i { 
-            margin-right: 18px; 
-            font-size: 24px; 
-            width: 30px; 
+            margin-right: 15px; 
+            font-size: 22px; 
+            width: 25px; 
             text-align: center;
-            color: #000000;
         }
 
-        .btn:active { 
-            transform: scale(0.97); 
-        }
+        .btn:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
@@ -72,20 +69,16 @@
                 const r = await fetch(CSV);
                 const t = await r.text();
                 const linhas = t.replace(/\r/g, "").split('\n').slice(1);
-
                 linhas.forEach(linha => {
                     const col = linha.split(/[;,]/);
                     if (col.length >= 2) {
                         let id = col[0].replace(/"/g, "").trim().toLowerCase()
                             .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                        
                         let url = col[1].replace(/"/g, "").trim();
-                        
                         const el = document.getElementById(id);
                         if (el && url.toLowerCase().startsWith('http')) {
-                            el.href = url;
-                            el.target = "_top";
+                            el.href = url; el.target = "_top";
                         }
                     }
                 });
