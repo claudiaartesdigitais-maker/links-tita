@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { 
             margin: 0; 
@@ -14,49 +15,53 @@
         .btn-container { 
             display: flex; 
             flex-direction: column; 
-            gap: 16px; /* Espaçamento entre botões */
+            gap: 16px; 
         }
         
         .btn {
             display: flex; 
             align-items: center; 
-            justify-content: flex-start; /* Alinhado à esquerda */
+            justify-content: flex-start; 
             width: 100%; 
-            padding: 20px 25px; /* Mais espaço interno para o toque */
+            padding: 20px 25px; 
             color: #000000 !important; /* TEXTO PRETO */
             text-decoration: none !important;
-            border-radius: 12px; 
+            border-radius: 15px; 
             font-weight: bold; 
-            font-size: 22px; /* Fonte grande */
+            font-size: 21px; /* Fonte Grande */
             box-sizing: border-box; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: transform 0.2s; 
             border: none;
-            /* Laranja Claro e Suave */
+            /* Laranja Claro / Pêssego */
             background: linear-gradient(135deg, #ffb347, #ffcc33);
+        }
+
+        /* Estilo dos ícones */
+        .btn i { 
+            margin-right: 18px; 
+            font-size: 24px; 
+            width: 30px; 
+            text-align: center;
+            color: #000000;
         }
 
         .btn:active { 
             transform: scale(0.97); 
         }
-
-        /* Pequeno detalhe para o texto não ficar colado na borda */
-        .btn-text {
-            margin-left: 5px;
-        }
     </style>
 </head>
 <body>
     <div class="btn-container">
-        <a href="#" id="minha-loja-online" class="btn"><span class="btn-text">Minha Loja Online</span></a>
-        <a href="#" id="catalogos-multimarcas" class="btn"><span class="btn-text">Catálogos Multimarcas</span></a>
-        <a href="#" id="cartao-visitas" class="btn"><span class="btn-text">Cartão de Visitas</span></a>
-        <a href="#" id="natura" class="btn"><span class="btn-text">Natura</span></a>
-        <a href="#" id="natura-especial" class="btn"><span class="btn-text">Natura Especial</span></a>
-        <a href="#" id="avon-beleza" class="btn"><span class="btn-text">Avon Beleza</span></a>
-        <a href="#" id="avon-casa" class="btn"><span class="btn-text">Avon Casa</span></a>
-        <a href="#" id="demillus" class="btn"><span class="btn-text">DeMillus</span></a>
-        <a href="#" id="tapperware" class="btn"><span class="btn-text">Tupperware</span></a>
+        <a href="#" id="minha-loja-online" class="btn"><i class="fas fa-shopping-bag"></i> Minha Loja Online</a>
+        <a href="#" id="catalogos-multimarcas" class="btn"><i class="fas fa-book-open"></i> Catálogos Multimarcas</a>
+        <a href="#" id="cartao-visitas" class="btn"><i class="fas fa-address-card"></i> Cartão de Visitas</a>
+        <a href="#" id="natura" class="btn"><i class="fas fa-leaf"></i> Natura</a>
+        <a href="#" id="natura-especial" class="btn"><i class="fas fa-spa"></i> Natura Especial</a>
+        <a href="#" id="avon-beleza" class="btn"><i class="fas fa-magic"></i> Avon Beleza</a>
+        <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
+        <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
+        <a href="#" id="tapperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
     </div>
 
     <script>
