@@ -5,18 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { margin: 0; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; background: transparent; }
-        .btn-container { display: flex; flex-direction: column; gap: 12px; }
+        .btn-container { display: flex; flex-direction: column; gap: 14px; } /* Aumentei o espaço entre botões */
+        
         .btn {
             display: flex; align-items: center; justify-content: center;
-            width: 100%; padding: 15px; color: white !important;
+            width: 100%; padding: 18px; color: white !important;
             text-align: center; text-decoration: none !important;
-            border-radius: 12px; font-weight: bold; font-size: 16px;
-            box-sizing: border-box; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 15px; 
+            font-weight: bold; 
+            font-size: 19px; /* Fonte aumentada de 16px para 19px */
+            box-sizing: border-box; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: transform 0.2s; border: none;
-            /* LARANJA MAIS CLARO / CORAL */
-            background: linear-gradient(90deg, #ff9e80, #ff8a65);
+            background: linear-gradient(90deg, #ff9e80, #ff8a65); /* Laranja Claro */
         }
-        .btn:active { transform: scale(0.97); }
+        
+        /* Ícones antes do texto */
+        .btn::before { margin-right: 10px; font-size: 22px; }
+        
+        #minha-loja-online::before { content: "🛍️"; }
+        #catalogos-multimarcas::before { content: "📖"; }
+        #cartao-visitas::before { content: "📇"; }
+        #natura::before, #natura-especial::before { content: "🌿"; }
+        #avon-beleza::before, #avon-casa::before { content: "💄"; }
+        #demillus::before { content: "👙"; }
+        #tapperware::before { content: "🥣"; }
+
+        .btn:active { transform: scale(0.96); }
     </style>
 </head>
 <body>
