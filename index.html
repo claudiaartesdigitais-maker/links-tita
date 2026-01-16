@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogos Tita</title>
+    <style>
+        body { margin: 0; padding: 15px; font-family: sans-serif; background: transparent; }
+        .btn-container { display: flex; flex-direction: column; gap: 12px; }
+        .btn {
+            display: block; width: 100%; padding: 16px;
+            background: #f06292; color: white !important;
+            text-align: center; text-decoration: none !important;
+            border-radius: 10px; font-weight: bold; box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="btn-container" id="lista">
+        <a href="#" id="minha-loja-online" class="btn">Minha Loja Online</a>
+        <a href="#" id="catalogos-multimarcas" class="btn">Catálogos Multimarcas</a>
+        <a href="#" id="cartao-visitas" class="btn">Cartão de Visitas</a>
+        <a href="#" id="natura" class="btn">Natura</a>
+        <a href="#" id="natura-especial" class="btn">Natura Especial</a>
+        <a href="#" id="avon-beleza" class="btn">Avon Beleza</a>
+        <a href="#" id="avon-casa" class="btn">Avon Casa</a>
+        <a href="#" id="demillus" class="btn">DeMillus</a>
+        <a href="#" id="tapperware" class="btn">Tupperware</a>
+    </div>
+
+    <script>
+        const CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?output=csv&t=' + Date.now();
+        async function load(){
+            try {
+                const r = await fetch(CSV);
+                const t = await r.text();
+                t.split('\n').slice(1).forEach(l => {
+                    const c = l.split(/[;,]/);
+                    if(c.length >= 2){
+                        let id = c[0].replace(/"/g,"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,'-').replace(/[^\w-]/g,'');
+                        let url = c[1].replace(/"/g,"").trim();
+                        let b = document.getElementById(id);
+                        if(b && url.includes('http')){ b.href = url; b.target = "_top"; }
+                    }
+                });
+            } catch(e){}
+        }
+        load();
+    </script>
+</body>
+</html>
