@@ -13,16 +13,10 @@
             border-radius: 12px; font-weight: bold; font-size: 16px;
             box-sizing: border-box; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.2s; border: none;
+            /* LARANJA MAIS CLARO / CORAL */
+            background: linear-gradient(90deg, #ff9e80, #ff8a65);
         }
         .btn:active { transform: scale(0.97); }
-
-        /* Cores Personalizadas */
-        #natura, #natura-especial { background: linear-gradient(90deg, #ff8a00, #ff5e00); }
-        #avon-beleza, #avon-casa { background: linear-gradient(90deg, #7f2da1, #a139d1); }
-        #tapperware { background: linear-gradient(90deg, #da291c, #ff4d4d); }
-        #demillus { background: linear-gradient(90deg, #222, #444); }
-        /* Cor Rosa Padrão para os outros */
-        .btn { background: linear-gradient(90deg, #f06292, #ec407a); }
     </style>
 </head>
 <body>
@@ -45,13 +39,11 @@
             try {
                 const r = await fetch(CSV);
                 const t = await r.text();
-                // Limpa quebras de linha e aspas extras
                 const linhas = t.replace(/\r/g, "").split('\n').slice(1);
 
                 linhas.forEach(linha => {
                     const col = linha.split(/[;,]/);
                     if (col.length >= 2) {
-                        // Limpa o nome da planilha para virar ID
                         let id = col[0].replace(/"/g, "").trim().toLowerCase()
                             .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .replace(/\s+/g, '-').replace(/[^\w-]/g, '');
@@ -68,7 +60,6 @@
             } catch (e) { console.error("Erro na carga:", e); }
         }
         load();
-        // Tenta carregar novamente após 1s caso o link demore
         setTimeout(load, 1500);
     </script>
 </body>
