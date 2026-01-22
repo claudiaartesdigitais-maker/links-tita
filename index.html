@@ -10,108 +10,88 @@
             padding: 10px; 
             font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
             background: transparent;
+            overflow-x: hidden;
         }
 
         .btn-container { 
             display: flex; 
             flex-direction: column; 
-            gap: 8px; 
+            gap: 10px; 
+            margin-top: 0;
         }
         
         .btn {
             display: flex; 
             align-items: center; 
+            justify-content: flex-start; 
             width: 100%; 
-            padding: 12px 20px; 
+            padding: 15px 20px; 
             color: #000000 !important;
             text-decoration: none !important;
-            border-radius: 12px; 
+            border-radius: 15px; 
             font-weight: bold; 
-            font-size: 20px; 
+            font-size: 18px; 
             box-sizing: border-box; 
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s; 
-            background: linear-gradient(135deg, #ffb347, #ffcc33);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease; 
             border: none;
+            /* Degradê vibrante que você já usava */
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
         }
 
-        /* Estilo para a imagem caso exista na Coluna C */
-        .img-icon {
-            width: 30px;
-            height: 30px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        /* Estilo para os ícones originais */
         .btn i { 
             margin-right: 15px; 
-            font-size: 22px; 
-            width: 30px; 
+            font-size: 20px; 
+            width: 25px; 
             text-align: center;
+            color: #333;
         }
 
-        .btn:active { transform: scale(0.97); }
+        .btn:active { 
+            transform: scale(0.96); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
-    <div class="btn-container" id="lista-links">
-        </div>
+    <div class="btn-container">
+        <a href="#" id="minha-loja-online" class="btn"><i class="fas fa-shopping-bag"></i> Minha Loja Online</a>
+        <a href="#" id="catalogos-multimarcas" class="btn"><i class="fas fa-book-open"></i> Catálogos Multimarcas</a>
+        <a href="#" id="cartao-visitas" class="btn"><i class="fas fa-address-card"></i> Cartão de Visitas</a>
+        <a href="#" id="natura" class="btn"><i class="fas fa-leaf"></i> Natura</a>
+        <a href="#" id="natura-exclusiva" class="btn"><i class="fas fa-spa"></i> Natura Exclusiva</a>
+        <a href="#" id="avon-beleza" class="btn"><i class="fas fa-magic"></i> Avon Beleza</a>
+        <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
+        <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
+        <a href="#" id="tapperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
+    </div>
 
     <script>
         const CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?output=csv&t=' + Date.now();
         
-        // Mapa de ícones originais baseado no ID (nome da planilha)
-        const iconesOriginais = {
-            "minha-loja-online": "fas fa-shopping-bag",
-            "catalogos-multimarcas": "fas fa-book-open",
-            "cartao-visitas": "fas fa-address-card",
-            "natura": "fas fa-leaf",
-            "natura-exclusiva": "fas fa-spa",
-            "avon-beleza": "fas fa-magic",
-            "avon-casa": "fas fa-home",
-            "demillus": "fas fa-female",
-            "tapperware": "fas fa-utensils"
-        };
-
         async function load(){
             try {
                 const r = await fetch(CSV);
                 const t = await r.text();
                 const linhas = t.replace(/\r/g, "").split('\n').slice(1);
-                const container = document.getElementById('lista-links');
-                container.innerHTML = '';
-
                 linhas.forEach(linha => {
-                    const col = linha.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    const col = linha.split(/[;,]/);
                     if (col.length >= 2) {
-                        let nome = col[0].replace(/"/g, "").trim();
+                        let id = col[0].replace(/"/g, "").trim().toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                            .replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                         let url = col[1].replace(/"/g, "").trim();
-                        let foto = col[2] ? col[2].replace(/"/g, "").trim() : "";
-                        
-                        // Gera o ID para buscar o ícone correto
-                        let id = nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-
-                        if (url.toLowerCase().startsWith('http')) {
-                            // Se tiver foto na planilha, usa ela. Se não, usa o ícone do mapa.
-                            let visualEsquerda = foto 
-                                ? `<img src="${foto}" class="img-icon">` 
-                                : `<i class="${iconesOriginais[id] || 'fas fa-link'}"></i>`;
-
-                            container.innerHTML += `
-                                <a href="${url}" target="_top" class="btn">
-                                    ${visualEsquerda}
-                                    <span>${nome}</span>
-                                </a>
-                            `;
+                        const el = document.getElementById(id);
+                        if (el && url.toLowerCase().startsWith('http')) {
+                            el.href = url; el.target = "_top";
                         }
                     }
                 });
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Erro ao carregar links:", e); }
         }
         load();
+        // Recarrega os links após 2 segundos para garantir que a planilha atualizou
+        setTimeout(load, 2000);
     </script>
 </body>
 </html>
