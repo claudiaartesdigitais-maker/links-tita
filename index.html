@@ -2,101 +2,75 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Catálogos da Tita</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { 
-            --tita-gold: #ffcc33;
-            --tita-orange: #ffb347;
-            --tita-dark: #333;
-            --bg-light: #fdfdfd;
-        }
-
         body { 
             margin: 0; 
-            padding: 15px; 
+            padding: 10px; 
             font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
-            background-color: var(--bg-light);
+            background: transparent;
             overflow-x: hidden;
         }
 
-        /* Container dos botões */
         .btn-container { 
             display: flex; 
             flex-direction: column; 
-            gap: 12px; 
-            max-width: 500px;
-            margin: 0 auto;
+            gap: 8px; 
+            margin-top: 0;
         }
         
-        /* CARD DO BOTÃO COM IMAGEM (ESTILO CAFETERIA) */
-        .btn-card {
+        .btn {
             display: flex; 
             align-items: center; 
-            background: white; 
+            justify-content: flex-start; 
+            width: 100%; 
+            padding: 5px; /* Reduzi o padding para a imagem ser o limite */
+            color: #000000 !important;
             text-decoration: none !important;
-            border-radius: 15px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 20px; 
+            box-sizing: border-box; 
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
             transition: transform 0.2s; 
             border: none;
-            overflow: hidden; /* Corta a imagem nas bordas arredondadas */
-            border-left: 8px solid var(--tita-orange);
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+            overflow: hidden;
         }
 
-        /* FOTO DO PRODUTO/CATÁLOGO */
-        .img-cat {
-            width: 80px;
-            height: 80px;
+        /* ESTILO DA IMAGEM NA ESQUERDA */
+        .btn-img {
+            width: 60px;
+            height: 60px;
             object-fit: cover;
-            flex-shrink: 0; /* NÃO ESMAGA A FOTO */
-            background: #eee;
-        }
-
-        /* TEXTO DO BOTÃO */
-        .btn-info {
-            flex: 1;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .btn-texto {
-            color: var(--tita-dark);
-            font-weight: bold; 
-            font-size: 18px; 
-        }
-
-        .btn-info i.fa-chevron-right {
-            color: #ccc;
-            font-size: 14px;
-        }
-
-        /* ÍCONE DE BACKUP (Caso não tenha foto) */
-        .no-img {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--tita-gold);
-            color: white;
-            font-size: 24px;
+            border-radius: 8px;
+            margin-right: 15px;
             flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .btn-card:active { transform: scale(0.97); }
+        /* ÍCONE CASO NÃO TENHA FOTO */
+        .btn i { 
+            margin-left: 15px;
+            margin-right: 15px; 
+            font-size: 22px; 
+            width: 25px; 
+            text-align: center;
+        }
+
+        .btn span {
+            padding-right: 10px;
+        }
+
+        .btn:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
-
     <div class="btn-container" id="lista-botoes">
-        <p style="text-align:center; padding:20px; color:#888;">Carregando catálogos...</p>
-    </div>
+        </div>
 
     <script>
-        // URL da Planilha da Tita (ajustada para pegar a Coluna C também)
         const CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?output=csv&t=' + Date.now();
         
         async function load(){
@@ -105,44 +79,34 @@
                 const t = await r.text();
                 const linhas = t.replace(/\r/g, "").split('\n').slice(1);
                 const container = document.getElementById('lista-botoes');
-                container.innerHTML = ''; // Limpa o "Carregando"
+                container.innerHTML = '';
 
                 linhas.forEach(linha => {
-                    // Divide as colunas (A, B, C)
                     const col = linha.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    
                     if (col.length >= 2) {
-                        let nomeOriginal = col[0].replace(/"/g, "").trim();
-                        let urlLink = col[1].replace(/"/g, "").trim();
-                        let urlFoto = col[2] ? col[2].replace(/"/g, "").trim() : ""; // Coluna C (Foto)
+                        let nome = col[0].replace(/"/g, "").trim();
+                        let url = col[1].replace(/"/g, "").trim();
+                        let foto = col[2] ? col[2].replace(/"/g, "").trim() : "";
 
-                        // Só cria o botão se tiver um link válido
-                        if (urlLink.toLowerCase().startsWith('http')) {
-                            const linkHtml = `
-                                <a href="${urlLink}" target="_top" class="btn-card">
-                                    ${urlFoto 
-                                        ? `<img src="${urlFoto}" class="img-cat">` 
-                                        : `<div class="no-img"><i class="fas fa-book"></i></div>`
-                                    }
-                                    <div class="btn-info">
-                                        <span class="btn-texto">${nomeOriginal}</span>
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>
+                        if (url.toLowerCase().startsWith('http')) {
+                            // Se tiver foto, usa a tag img. Se não tiver, usa um ícone padrão.
+                            let visualEsquerda = foto 
+                                ? `<img src="${foto}" class="btn-img">` 
+                                : `<i class="fas fa-shopping-bag"></i>`;
+
+                            container.innerHTML += `
+                                <a href="${url}" target="_top" class="btn">
+                                    ${visualEsquerda}
+                                    <span>${nome}</span>
                                 </a>
                             `;
-                            container.innerHTML += linkHtml;
                         }
                     }
                 });
-            } catch (e) { 
-                console.error("Erro:", e); 
-                document.getElementById('lista-botoes').innerHTML = '<p style="text-align:center;">Erro ao carregar os dados.</p>';
-            }
+            } catch (e) { console.error("Erro:", e); }
         }
-        
         load();
-        // Recarrega os links a cada 30 segundos para manter atualizado
-        setInterval(load, 30000);
+        setTimeout(load, 2000);
     </script>
 </body>
 </html>
