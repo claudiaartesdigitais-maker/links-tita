@@ -70,48 +70,38 @@
         
         async function loadLinks(){
             try {
-                // Adicionamos um timestamp para evitar cache do Google
+                // Fetch com timestamp para ignorar cache e pegar dados novos da planilha
                 const response = await fetch(`${CSV_URL}&t=${Date.now()}`);
-                const data = await response.text();
+                const text = await response.text();
                 
-                // Divide as linhas e remove a primeira (cabeçalho)
-                const rows = data.split(/\r?\n/).slice(1);
+                // Limpa quebras de linha e separa as linhas da planilha
+                const rows = text.replace(/\r/g, "").split('\n').slice(1);
                 
                 rows.forEach(row => {
-                    // Tenta separar por vírgula ou ponto e vírgula
-                    const columns = row.split(/[;,]/);
+                    // Separa as colunas (aceita vírgula ou ponto e vírgula)
+                    const cols = row.split(/[;,]/);
                     
-                    if (columns.length >= 2) {
-                        let rawId = columns[0].replace(/"/g, "").trim();
-                        let url = columns[1].replace(/"/g, "").trim();
+                    if (cols.length >= 2) {
+                        // Pega o ID da Coluna A e a URL da Coluna B
+                        let id = cols[0].replace(/"/g, "").trim().toLowerCase();
+                        let url = cols[1].replace(/"/g, "").trim();
 
-                        // Formata o ID para bater com o HTML (minúsculo, sem acento, com hífens)
-                        let id = rawId.toLowerCase()
-                                      .normalize("NFD")
-                                      .replace(/[\u0300-\u036f]/g, "")
-                                      .replace(/\s+/g, '-')
-                                      .replace(/[^\w-]/g, '');
-
-                        const element = document.getElementById(id);
+                        const button = document.getElementById(id);
                         
-                        // Só aplica se o ID existir no HTML e a URL for válida
-                        if (element && url.toLowerCase().startsWith('http')) {
-                            element.href = url;
-                            element.target = "_blank"; // Abre em nova aba para não dar erro de frame
+                        // Só aplica o link se o ID existir no HTML e a URL começar com http
+                        if (button && url.toLowerCase().startsWith('http')) {
+                            button.href = url;
+                            button.target = "_blank"; 
                         }
                     }
                 });
-                console.log("Links atualizados com sucesso.");
             } catch (error) {
-                console.error("Erro ao carregar a planilha:", error);
+                console.error("Erro ao carregar links da planilha:", error);
             }
         }
 
-        // Executa ao carregar a página
+        // Inicia o carregamento assim que a página abre
         loadLinks();
-
-        // Opcional: Recarrega a cada 30 segundos se a página ficar aberta
-        setInterval(loadLinks, 30000);
     </script>
 </body>
 </html>
