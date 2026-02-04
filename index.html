@@ -35,7 +35,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: all 0.2s ease; 
             border: none;
-            /* Degradê vibrante que você já usava */
             background: linear-gradient(135deg, #ffb347, #ffcc33);
         }
 
@@ -67,31 +66,52 @@
     </div>
 
     <script>
-        const CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?output=csv&t=' + Date.now();
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?output=csv';
         
-        async function load(){
+        async function loadLinks(){
             try {
-                const r = await fetch(CSV);
-                const t = await r.text();
-                const linhas = t.replace(/\r/g, "").split('\n').slice(1);
-                linhas.forEach(linha => {
-                    const col = linha.split(/[;,]/);
-                    if (col.length >= 2) {
-                        let id = col[0].replace(/"/g, "").trim().toLowerCase()
-                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                            .replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                        let url = col[1].replace(/"/g, "").trim();
-                        const el = document.getElementById(id);
-                        if (el && url.toLowerCase().startsWith('http')) {
-                            el.href = url; el.target = "_top";
+                // Adicionamos um timestamp para evitar cache do Google
+                const response = await fetch(`${CSV_URL}&t=${Date.now()}`);
+                const data = await response.text();
+                
+                // Divide as linhas e remove a primeira (cabeçalho)
+                const rows = data.split(/\r?\n/).slice(1);
+                
+                rows.forEach(row => {
+                    // Tenta separar por vírgula ou ponto e vírgula
+                    const columns = row.split(/[;,]/);
+                    
+                    if (columns.length >= 2) {
+                        let rawId = columns[0].replace(/"/g, "").trim();
+                        let url = columns[1].replace(/"/g, "").trim();
+
+                        // Formata o ID para bater com o HTML (minúsculo, sem acento, com hífens)
+                        let id = rawId.toLowerCase()
+                                      .normalize("NFD")
+                                      .replace(/[\u0300-\u036f]/g, "")
+                                      .replace(/\s+/g, '-')
+                                      .replace(/[^\w-]/g, '');
+
+                        const element = document.getElementById(id);
+                        
+                        // Só aplica se o ID existir no HTML e a URL for válida
+                        if (element && url.toLowerCase().startsWith('http')) {
+                            element.href = url;
+                            element.target = "_blank"; // Abre em nova aba para não dar erro de frame
                         }
                     }
                 });
-            } catch (e) { console.error("Erro ao carregar links:", e); }
+                console.log("Links atualizados com sucesso.");
+            } catch (error) {
+                console.error("Erro ao carregar a planilha:", error);
+            }
         }
-        load();
-        // Recarrega os links após 2 segundos para garantir que a planilha atualizou
-        setTimeout(load, 2000);
+
+        // Executa ao carregar a página
+        loadLinks();
+
+        // Opcional: Recarrega a cada 30 segundos se a página ficar aberta
+        setInterval(loadLinks, 30000);
     </script>
 </body>
 </html>
