@@ -5,51 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { 
-            margin: 0; 
-            padding: 10px; 
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
-            background: transparent;
-            overflow-x: hidden;
-        }
-
-        .btn-container { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            margin-top: 0;
-        }
-        
+        body { margin: 0; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; background: transparent; }
+        .btn-container { display: flex; flex-direction: column; gap: 10px; }
         .btn {
-            display: flex; 
-            align-items: center; 
-            justify-content: flex-start; 
-            width: 100%; 
-            padding: 15px 20px; 
-            color: #000000 !important;
-            text-decoration: none !important;
-            border-radius: 15px; 
-            font-weight: bold; 
-            font-size: 18px; 
-            box-sizing: border-box; 
+            display: flex; align-items: center; padding: 15px 20px; 
+            color: #000 !important; text-decoration: none !important;
+            border-radius: 15px; font-weight: bold; font-size: 18px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.2s ease; 
-            border: none;
             background: linear-gradient(135deg, #ffb347, #ffcc33);
+            transition: transform 0.2s;
         }
-
-        .btn i { 
-            margin-right: 15px; 
-            font-size: 20px; 
-            width: 25px; 
-            text-align: center;
-            color: #333;
-        }
-
-        .btn:active { 
-            transform: scale(0.96); 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .btn i { margin-right: 15px; width: 25px; text-align: center; font-size: 20px; }
+        .btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -66,41 +33,42 @@
     </div>
 
     <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?output=csv';
-        
-        async function loadLinks(){
-            try {
-                // Fetch com timestamp para ignorar cache e pegar dados novos da planilha
-                const response = await fetch(`${CSV_URL}&t=${Date.now()}`);
-                const text = await response.text();
-                
-                // Limpa quebras de linha e separa as linhas da planilha
-                const rows = text.replace(/\r/g, "").split('\n').slice(1);
-                
-                rows.forEach(row => {
-                    // Separa as colunas (aceita vírgula ou ponto e vírgula)
-                    const cols = row.split(/[;,]/);
-                    
-                    if (cols.length >= 2) {
-                        // Pega o ID da Coluna A e a URL da Coluna B
-                        let id = cols[0].replace(/"/g, "").trim().toLowerCase();
-                        let url = cols[1].replace(/"/g, "").trim();
+        // O link novo que você gerou
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?gid=0&single=true&output=csv';
 
-                        const button = document.getElementById(id);
+        async function loadLinks() {
+            try {
+                // Adicionamos o timestamp para forçar o Google a mandar a versão mais recente
+                const response = await fetch(`${CSV_URL}&t=${Date.now()}`);
+                const data = await response.text();
+                
+                // Divide por quebra de linha e limpa espaços vazios
+                const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
+
+                rows.forEach(row => {
+                    // Tenta separar por vírgula ou ponto-e-vírgula
+                    let cols = row.split(/[;,]/);
+
+                    if (cols.length >= 2) {
+                        // Limpa aspas e espaços de cada coluna
+                        const idDaPlanilha = cols[0].replace(/"/g, '').trim().toLowerCase();
+                        const urlDaPlanilha = cols[1].replace(/"/g, '').trim();
+
+                        const botaoElemento = document.getElementById(idDaPlanilha);
                         
-                        // Só aplica o link se o ID existir no HTML e a URL começar com http
-                        if (button && url.toLowerCase().startsWith('http')) {
-                            button.href = url;
-                            button.target = "_blank"; 
+                        // Verifica se o botão existe e se o link é um endereço real
+                        if (botaoElemento && urlDaPlanilha.toLowerCase().startsWith('http')) {
+                            botaoElemento.href = urlDaPlanilha;
+                            botaoElemento.target = "_blank"; // Abre em aba externa
                         }
                     }
                 });
-            } catch (error) {
-                console.error("Erro ao carregar links da planilha:", error);
+                console.log("Links carregados com sucesso!");
+            } catch (err) {
+                console.error("Falha ao carregar links:", err);
             }
         }
 
-        // Inicia o carregamento assim que a página abre
         loadLinks();
     </script>
 </body>
