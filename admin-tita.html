@@ -1,1 +1,69 @@
+<!DOCTYPE html>
 
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Tita Multimarcas</title>
+<style>
+body { font-family: sans-serif; background: #fff5f8; padding: 20px; display: flex; justify-content: center; }
+.card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(216,27,96,0.1); width: 100%; max-width: 400px; border: 1px solid #ffdae9; }
+h2 { color: #d81b60; text-align: center; }
+label { display: block; margin-top: 15px; font-weight: bold; color: #880e4f; }
+select, input, button { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ffc1dc; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
+button { background: #d81b60; color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
+#status { text-align: center; font-weight: bold; padding: 10px; margin-top: 15px; display: none; border-radius: 8px; }
+</style>
+</head>
+<body>
+<div class="card">
+<h2>Atualizar Links Tita</h2>
+<label>Selecione o Item:</label>
+<select id="revista">
+<option value="minha-loja-online">Minha Loja Online</option>
+<option value="catalogos-multimarcas">Catálogos Multimarcas</option>
+<option value="cartao-visitas">Cartão de Visitas</option>
+<option value="natura">natura</option>
+<option value="natura-exclusiva">natura-exclusiva</option>
+<option value="avon-beleza">avon-beleza</option>
+<option value="avon-casa">avon-casa</option>
+<option value="demillus">demillus</option>
+<option value="tapperware">tapperware</option>
+</select>
+<label>Novo Link:</label>
+<input type="text" id="link" placeholder="Cole o link aqui...">
+<button id="btn" onclick="atualizar()">ATUALIZAR PLANILHA</button>
+<div id="status"></div>
+</div>
+<script>
+async function atualizar() {
+const urlScript = "COLE_AQUI_SEU_LINK_EXEC";
+const btn = document.getElementById('btn');
+const status = document.getElementById('status');
+const payload = {
+origem: "TITA",
+revista: document.getElementById('revista').value,
+link: document.getElementById('link').value
+};
+if(!payload.link) { alert("Cole o link!"); return; }
+btn.disabled = true; btn.innerText = "Atualizando...";
+try {
+const response = await fetch(urlScript, { method: 'POST', body: JSON.stringify(payload) });
+const res = await response.json();
+status.style.display = "block";
+if(res.result === "sucesso") {
+status.style.background = "#e8f5e9"; status.style.color = "#2e7d32";
+status.innerText = "Link atualizado com sucesso!";
+document.getElementById('link').value = "";
+} else {
+status.style.background = "#ffebee"; status.innerText = "Erro: Nome não encontrado.";
+}
+} catch (e) {
+status.style.display = "block"; status.innerText = "Erro de conexão.";
+} finally {
+btn.disabled = false; btn.innerText = "ATUALIZAR PLANILHA";
+}
+}
+</script>
+</body>
+</html>
