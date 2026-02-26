@@ -10,7 +10,7 @@
             margin: 0; 
             padding: 40px 15px; 
             font-family: 'Segoe UI', Arial, sans-serif; 
-            background: #fff8f2; 
+            background: #ffffff; /* Fundo 100% Branco */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,7 +22,7 @@
         }
 
         .header p {
-            color: #bf360c; 
+            color: #e65100; /* Laranja forte para combinar com os botões */
             font-size: 22px; 
             font-weight: bold;
             margin: 0;
@@ -62,6 +62,23 @@
         .btn:active { 
             transform: scale(0.96); 
         }
+
+        .scroll-indicator {
+            margin-top: 30px;
+            color: #ff9800;
+            font-size: 30px;
+            animation: bounce 2s infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.8;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
     </style>
 </head>
 <body>
@@ -80,6 +97,10 @@
         <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
         <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
         <a href="#" id="tupperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
+    </div>
+
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
     </div>
 
     <script>
