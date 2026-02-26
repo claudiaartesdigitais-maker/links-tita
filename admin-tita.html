@@ -3,71 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Tita Multimarcas</title>
+    <title>Tita Multimarcas - Links e Catálogos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: sans-serif; background: #fff5f8; padding: 20px; display: flex; justify-content: center; }
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(216,27,96,0.1); width: 100%; max-width: 400px; border: 1px solid #ffdae9; }
-        h2 { color: #d81b60; text-align: center; }
-        label { display: block; margin-top: 15px; font-weight: bold; color: #880e4f; }
-        select, input, button { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ffc1dc; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
-        button { background: #d81b60; color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        #status { text-align: center; font-weight: bold; padding: 10px; margin-top: 15px; display: none; border-radius: 8px; }
+        body { 
+            margin: 0; 
+            padding: 20px 10px; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: #fff5f8; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #d81b60;
+            margin: 0;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .header p {
+            color: #880e4f;
+            font-size: 15px;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .btn-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn {
+            display: flex; 
+            align-items: center; 
+            padding: 16px 20px; 
+            color: #ffffff !important; 
+            text-decoration: none !important;
+            border-radius: 15px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
+            background: linear-gradient(135deg, #d81b60, #ad1457); /* Cor padrão para todos */
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+        }
+
+        .btn i { 
+            margin-right: 15px; 
+            width: 25px; 
+            text-align: center; 
+            font-size: 18px; 
+        }
+
+        .btn:active { 
+            transform: scale(0.97); 
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #ad1457;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
-<div class="card">
-    <h2>Atualizar Links Tita</h2>
-    <label>Selecione o Catálogo:</label>
-    <select id="revista">
-        <option value="minha-loja-online">Minha Loja Online</option>
-        <option value="catalogos-multimarcas">Catálogos Multimarcas</option>
-        <option value="cartao-visitas">Cartão de Visitas</option>
-        <option value="natura">Natura</option>
-        <option value="natura-exclusiva">Natura Exclusiva</option>
-        <option value="avon-beleza">Avon Beleza</option>
-        <option value="avon-casa">Avon Casa</option>
-        <option value="demillus">DeMillus</option>
-        <option value="tupperware">Tupperware</option> </select>
 
-    <label>Novo Link:</label>
-    <input type="text" id="link" placeholder="Cole o link aqui...">
-    <button id="btn" onclick="atualizar()">ATUALIZAR PLANILHA</button>
-    <div id="status"></div>
-</div>
+    <div class="header">
+        <h1>Tita Multimarcas</h1>
+        <p>Acesse meus catálogos e lojas virtuais</p>
+    </div>
 
-<script>
-    async function atualizar() {
-        // TROQUE PELO SEU LINK DO APPS SCRIPT ABAIXO
-        const urlScript = "https://script.google.com/macros/s/AKfycbzmg2ApYIzmOv8cbDc05RyBj02QjIC-F_8BnfZAASzT_1RdbmPg11-YBAigDH9uNAqIug/exec"; 
-        
-        const btn = document.getElementById('btn');
-        const status = document.getElementById('status');
-        const payload = {
-            origem: "TITA",
-            revista: document.getElementById('revista').value,
-            link: document.getElementById('link').value
-        };
+    <div class="btn-container">
+        <a href="#" id="minha-loja-online" class="btn"><i class="fas fa-shopping-bag"></i> Minha Loja Online</a>
+        <a href="#" id="catalogos-multimarcas" class="btn"><i class="fas fa-book-open"></i> Catálogos Multimarcas</a>
+        <a href="#" id="cartao-visitas" class="btn"><i class="fas fa-address-card"></i> Cartão de Visitas</a>
+        <a href="#" id="natura" class="btn"><i class="fas fa-leaf"></i> Natura</a>
+        <a href="#" id="natura-exclusiva" class="btn"><i class="fas fa-spa"></i> Natura Exclusiva</a>
+        <a href="#" id="avon-beleza" class="btn"><i class="fas fa-magic"></i> Avon Beleza</a>
+        <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
+        <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
+        <a href="#" id="tupperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
+    </div>
 
-        if(!payload.link) { alert("Cole o link!"); return; }
-        btn.disabled = true; btn.innerText = "Atualizando...";
+    <div class="footer">
+        Links Oficiais • Atualizado via Planilha
+    </div>
 
-        try {
-            const response = await fetch(urlScript, { method: 'POST', body: JSON.stringify(payload) });
-            const res = await response.json();
-            status.style.display = "block";
-            if(res.result === "sucesso") {
-                status.style.background = "#e8f5e9"; status.style.color = "#2e7d32";
-                status.innerText = "Sucesso! Link da " + payload.revista + " atualizado.";
-                document.getElementById('link').value = "";
-            } else {
-                status.style.background = "#ffebee"; status.innerText = "Erro: " + payload.revista + " não encontrada na Planilha.";
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJUuIB5dNERXB_74PlkvgqG-Eq3zbpprNhAUGb7E0uHvuj1QCNOEGOvqiOHl9jLGXRJ-c_BEPL0iu0/pub?gid=0&single=true&output=csv';
+
+        async function loadLinks() {
+            try {
+                const response = await fetch(`${CSV_URL}&t=${Date.now()}`);
+                const data = await response.text();
+                const rows = data.split(/\r?\n/).filter(row => row.trim() !== "");
+
+                rows.forEach(row => {
+                    let cols = row.split(/[;,]/);
+                    if (cols.length >= 2) {
+                        const idDaPlanilha = cols[0].replace(/"/g, '').trim().toLowerCase();
+                        const urlDaPlanilha = cols[1].replace(/"/g, '').trim();
+                        const botaoElemento = document.getElementById(idDaPlanilha);
+                        
+                        if (botaoElemento && urlDaPlanilha.toLowerCase().startsWith('http')) {
+                            botaoElemento.href = urlDaPlanilha;
+                            botaoElemento.target = "_blank"; 
+                        }
+                    }
+                });
+            } catch (err) {
+                console.error("Erro ao carregar links:", err);
             }
-        } catch (e) {
-            status.style.display = "block"; status.innerText = "Erro de conexão.";
-        } finally {
-            btn.disabled = false; btn.innerText = "ATUALIZAR PLANILHA";
         }
-    }
-</script>
+        loadLinks();
+    </script>
 </body>
 </html>
