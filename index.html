@@ -15,7 +15,7 @@
     <style>
         body { 
             margin: 0; 
-            padding: 10px 10px 40px 10px; 
+            padding: 10px 10px 20px 10px; 
             font-family: 'Segoe UI', Arial, sans-serif; 
             background: #ffffff; 
             display: flex;
@@ -42,7 +42,6 @@
             gap: 10px; 
             width: 100%;
             max-width: 500px;
-            margin-bottom: 30px;
         }
 
         .btn {
@@ -62,6 +61,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             line-height: 1.2;
             word-wrap: break-word;
+            box-sizing: border-box;
         }
 
         .btn i { 
@@ -70,42 +70,14 @@
             flex-shrink: 0;
         }
 
-        /* Botão Tupperware Centralizado e Grande no final */
+        /* Tupperware alinhado ocupando as duas colunas */
         #tupperware {
             grid-column: span 2; 
-            width: 100%;
+            width: 100%; 
         }
 
         .btn:active { 
             transform: scale(0.95); 
-        }
-
-        /* Estilo do Botão de Compartilhar */
-        .share-container {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .btn-share {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: #ff7a00;
-            color: black !important;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-            transition: 0.2s;
-        }
-
-        .btn-share:active {
-            transform: scale(0.95);
         }
     </style>
 </head>
@@ -125,12 +97,6 @@
         <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
         <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
         <a href="#" id="tupperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
-    </div>
-
-    <div class="share-container">
-        <a class="btn-share" href="https://api.whatsapp.com/send?text=Olha%20isso!%20%C3%89%20da%20Tita%20Multimarcas%20-%20confira%20o%20cart%C3%A3o%20de%20visitas%20digital%20Natura:%20https://cartao-visita.natura.com/br/10803599"> 
-           <span>Compartilhar</span> 
-        </a>
     </div>
 
     <script>
