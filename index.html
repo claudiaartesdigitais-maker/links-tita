@@ -41,27 +41,30 @@
             display: flex; 
             align-items: center; 
             justify-content: center;
-            padding: 12px 5px; 
+            padding: 10px 8px; 
             color: #ffffff !important; 
             text-decoration: none !important;
             border-radius: 12px; 
-            font-weight: 900; /* Extra negrito */
-            font-size: 18px; /* FONTE AUMENTADA PARA 18px */
+            font-weight: 900; 
+            font-size: 18px; /* FONTE GRANDE MANTIDA */
             text-align: center;
             background: linear-gradient(135deg, #ff9800, #e65100);
             border: none;
-            min-height: 65px; 
+            min-height: 75px; /* Aumentei um pouquinho para acomodar 2 linhas com folga */
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            line-height: 1.2; /* Espaçamento entre as linhas do texto */
+            word-wrap: break-word; /* Força a quebra de palavra se necessário */
         }
 
         .btn i { 
             font-size: 20px; 
             margin-right: 10px;
+            flex-shrink: 0; /* Impede o ícone de amassar */
         }
 
-        /* AJUSTE DO BOTÃO TUPPERWARE PARA FICAR CENTRALIZADO E GRANDE */
+        /* Botão Tupperware Centralizado no Final */
         #tupperware {
-            grid-column: span 2; /* Ocupa as duas colunas */
+            grid-column: span 2; 
             width: 100%;
         }
 
@@ -81,9 +84,9 @@
         <a href="#" id="catalogos-multimarcas" class="btn"><i class="fas fa-book-open"></i> Catálogos</a>
         <a href="#" id="cartao-visitas" class="btn"><i class="fas fa-address-card"></i> Cartão de Visita</a>
         <a href="#" id="natura" class="btn"><i class="fas fa-leaf"></i> Natura</a>
-        <a href="#" id="natura-exclusiva" class="btn"><i class="fas fa-spa"></i> Exclusiva</a>
-        <a href="#" id="avon-beleza" class="btn"><i class="fas fa-magic"></i> Avon</a>
-        <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Casa</a>
+        <a href="#" id="natura-exclusiva" class="btn"><i class="fas fa-spa"></i> Natura Exclusiva</a>
+        <a href="#" id="avon-beleza" class="btn"><i class="fas fa-magic"></i> Avon Beleza</a>
+        <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
         <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
         <a href="#" id="tupperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
     </div>
