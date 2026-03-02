@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links e Catálogos - Tita</title>
+    <title>Tita Multimarcas - Links e Catálogos</title>
+
+    <meta property="og:title" content="Tita Multimarcas">
+    <meta property="og:description" content="Olha isso! É da Tita Multimarcas - confira o cartão de visitas digital Natura">
+    <meta property="og:image" content="https://github.com/RADIOCOTIA/tita/blob/main/FOTO-TITA.png?raw=true">
+    <meta property="og:url" content="https://titamultimarcas.pedidoon.net">
+    <meta property="og:type" content="website">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { 
             margin: 0; 
-            padding: 10px 10px; 
+            padding: 10px 10px 40px 10px; 
             font-family: 'Segoe UI', Arial, sans-serif; 
             background: #ffffff; 
             display: flex;
@@ -35,6 +42,7 @@
             gap: 10px; 
             width: 100%;
             max-width: 500px;
+            margin-bottom: 30px;
         }
 
         .btn {
@@ -46,23 +54,23 @@
             text-decoration: none !important;
             border-radius: 12px; 
             font-weight: 900; 
-            font-size: 18px; /* FONTE GRANDE MANTIDA */
+            font-size: 18px; 
             text-align: center;
             background: linear-gradient(135deg, #ff9800, #e65100);
             border: none;
-            min-height: 75px; /* Aumentei um pouquinho para acomodar 2 linhas com folga */
+            min-height: 75px; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            line-height: 1.2; /* Espaçamento entre as linhas do texto */
-            word-wrap: break-word; /* Força a quebra de palavra se necessário */
+            line-height: 1.2;
+            word-wrap: break-word;
         }
 
         .btn i { 
             font-size: 20px; 
             margin-right: 10px;
-            flex-shrink: 0; /* Impede o ícone de amassar */
+            flex-shrink: 0;
         }
 
-        /* Botão Tupperware Centralizado no Final */
+        /* Botão Tupperware Centralizado e Grande no final */
         #tupperware {
             grid-column: span 2; 
             width: 100%;
@@ -70,6 +78,34 @@
 
         .btn:active { 
             transform: scale(0.95); 
+        }
+
+        /* Estilo do Botão de Compartilhar */
+        .share-container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #ff7a00;
+            color: black !important;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            transition: 0.2s;
+        }
+
+        .btn-share:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
@@ -89,6 +125,12 @@
         <a href="#" id="avon-casa" class="btn"><i class="fas fa-home"></i> Avon Casa</a>
         <a href="#" id="demillus" class="btn"><i class="fas fa-female"></i> DeMillus</a>
         <a href="#" id="tupperware" class="btn"><i class="fas fa-utensils"></i> Tupperware</a>
+    </div>
+
+    <div class="share-container">
+        <a class="btn-share" href="https://api.whatsapp.com/send?text=Olha%20isso!%20%C3%89%20da%20Tita%20Multimarcas%20-%20confira%20o%20cart%C3%A3o%20de%20visitas%20digital%20Natura:%20https://cartao-visita.natura.com/br/10803599"> 
+           <span>Compartilhar</span> 
+        </a>
     </div>
 
     <script>
